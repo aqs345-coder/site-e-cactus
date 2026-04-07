@@ -1,5 +1,7 @@
 # User
 start_claude*
+.opencodeignore
+.opencode
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
