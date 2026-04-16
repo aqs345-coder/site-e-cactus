@@ -30,18 +30,18 @@
 
 /* 2. TIPOGRAFIA */
 :root {
-  --ff-regular: 'Inter', 'Roboto', system-ui, -apple-system, sans-serif;
-  --ff-headings: 'Oswald', 'Bebas Neue', 'Impact', sans-serif;
-  --ff-mono: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+  --ff-regular: "Inter", "Roboto", system-ui, -apple-system, sans-serif;
+  --ff-headings: "Oswald", "Bebas Neue", "Impact", sans-serif;
+  --ff-mono: "JetBrains Mono", "Fira Code", "Consolas", monospace;
 
   /* Escala Fluida com clamp() */
   --fs-sm: clamp(1.2rem, 0.8rem + 0.5vw, 1.4rem);
   --fs-base: clamp(1.4rem, 1rem + 0.5vw, 1.6rem);
-  --fs-h6: clamp(1.6rem, 1.2rem + 0.6vw, 2.0rem);
+  --fs-h6: clamp(1.6rem, 1.2rem + 0.6vw, 2rem);
   --fs-h5: clamp(1.8rem, 1.3rem + 0.8vw, 2.4rem);
-  --fs-h4: clamp(2.0rem, 1.4rem + 1.0vw, 3.0rem);
+  --fs-h4: clamp(2rem, 1.4rem + 1vw, 3rem);
   --fs-h3: clamp(2.4rem, 1.6rem + 1.4vw, 3.8rem);
-  --fs-h2: clamp(3.0rem, 2.0rem + 2.0vw, 5.0rem);
+  --fs-h2: clamp(3rem, 2rem + 2vw, 5rem);
   --fs-h1: clamp(3.6rem, 2.4rem + 2.5vw, 6.5rem);
 
   /* Line Heights */
@@ -56,9 +56,9 @@
   --sp-sm: 0.8rem;
   --sp-base: 1.6rem;
   --sp-lg: 2.4rem;
-  --sp-xl: 4.0rem;
+  --sp-xl: 4rem;
   --sp-2xl: 6.4rem;
-  --sp-3xl: 10.0rem;
+  --sp-3xl: 10rem;
 
   --mw-grid: 120rem;
   --mw-content: 80rem;
@@ -67,6 +67,8 @@
   --br-base: 0.2rem;
   --br-lg: 0.4rem;
   --br-none: 0;
+
+  --pos: 5%;
 }
 
 /* 4. CONFIGURAÇÃO BASE (Resets Globais) */
@@ -125,7 +127,9 @@ h6 {
 a {
   color: var(--clr-primary-base);
   text-decoration: none;
-  transition: color 0.2s ease, background-color 0.2s ease;
+  transition:
+    color 0.2s ease,
+    background-color 0.2s ease;
 }
 
 a:hover {
@@ -148,12 +152,30 @@ h6 {
   color: var(--clr-text-base);
 }
 
-h1 { font-size: 16px; font-size: var(--fs-h1); }
-h2 { font-size: 14px; font-size: var(--fs-h2); }
-h3 { font-size: 12px; font-size: var(--fs-h3); }
-h4 { font-size: 10px; font-size: var(--fs-h4); }
-h5 { font-size: 8px; font-size: var(--fs-h5); }
-h6 { font-size: 6px; font-size: var(--fs-h6); }
+h1 {
+  font-size: 16px;
+  font-size: var(--fs-h1);
+}
+h2 {
+  font-size: 14px;
+  font-size: var(--fs-h2);
+}
+h3 {
+  font-size: 12px;
+  font-size: var(--fs-h3);
+}
+h4 {
+  font-size: 10px;
+  font-size: var(--fs-h4);
+}
+h5 {
+  font-size: 8px;
+  font-size: var(--fs-h5);
+}
+h6 {
+  font-size: 6px;
+  font-size: var(--fs-h6);
+}
 
 /* Utility Classes */
 .container {
@@ -205,7 +227,9 @@ h6 { font-size: 6px; font-size: var(--fs-h6); }
   border: 0.1rem solid var(--clr-gray-600);
   border-radius: var(--br-base);
   padding: var(--sp-lg);
-  transition: border-color 0.2s ease, transform 0.2s ease;
+  transition:
+    border-color 0.2s ease,
+    transform 0.2s ease;
 }
 
 .card:hover {
@@ -289,15 +313,23 @@ h6 { font-size: 6px; font-size: var(--fs-h6); }
 }
 
 .hero::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: 
-    radial-gradient(ellipse at 20% 50%, hsla(48, 100%, 55%, 0.08) 0%, transparent 50%),
-    radial-gradient(ellipse at 80% 20%, hsla(48, 100%, 55%, 0.05) 0%, transparent 40%);
+  background:
+    radial-gradient(
+      ellipse at 20% 50%,
+      hsla(48, 100%, 55%, 0.08) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      ellipse at 80% 20%,
+      hsla(48, 100%, 55%, 0.05) 0%,
+      transparent 40%
+    );
   pointer-events: none;
 }
 
@@ -341,37 +373,36 @@ h6 { font-size: 6px; font-size: var(--fs-h6); }
   flex-wrap: wrap;
 }
 
-.hero__stats {
+.hero__separator {
+  position: absolute;
+  bottom: 0; /* Cola o separador na borda inferior da seção Hero */
+  left: 0;
+  width: 100%;
   display: flex;
-  gap: var(--sp-xl);
-  margin-top: var(--sp-2xl);
-  padding-top: var(--sp-xl);
-  border-top: 0.1rem solid var(--clr-gray-700);
-  position: relative;
+  align-items: center;
   z-index: 1;
 }
 
-.hero__stat {
-  display: flex;
-  flex-direction: column;
+/* Cria as linhas contínuas antes e depois do texto */
+.hero__separator::before,
+.hero__separator::after {
+  content: "";
+  flex: 1; /* Faz a linha esticar para preencher o espaço vazio */
+  height: 1px;
+  background-color: var(
+    --clr-gray-700
+  ); /* Usa a sua variável de cinza escuro */
 }
 
-.hero__stat-value {
-  font-family: var(--ff-headings);
-  font-size: var(--fs-h3, 3.8rem);
-  color: var(--clr-text-base);
-  line-height: 1;
-}
-
-.hero__stat-label {
-  font-family: var(--ff-mono);
-  font-size: var(--fs-sm, 1.4rem);
-  color: var(--clr-text-muted);
+/* Estilo da label em si */
+.hero__separator-text {
+  padding: 0 var(--sp-xl); /* Dá um respiro entre as linhas e o texto */
+  font-family: var(--ff-mono); /* Mantém a fonte monoespaçada tech */
+  font-size: 1.2rem; /* Tamanho discreto */
+  color: var(--clr-gray-400); /* Cor neutra para não ofuscar o título */
   text-transform: uppercase;
-  letter-spacing: 0.1em;
-  margin-top: var(--sp-smlst);
+  letter-spacing: 0.15em;
 }
-
 /* ========================================
    SECTIONS
    ======================================== */
@@ -441,7 +472,9 @@ h6 { font-size: 6px; font-size: var(--fs-h6); }
   background: var(--clr-bg-base);
   border: 0.1rem solid var(--clr-gray-600);
   border-radius: var(--br-base);
-  transition: border-color 0.2s ease, transform 0.2s ease;
+  transition:
+    border-color 0.2s ease,
+    transform 0.2s ease;
 }
 
 .spec-card:hover {
@@ -583,8 +616,391 @@ h6 { font-size: 6px; font-size: var(--fs-h6); }
 }
 
 /* ========================================
-   CUSTOM CURSOR
-   ======================================== */
+    ANNOUNCEMENTS (Quadro de Avisos - Racing)
+    ======================================== */
+:root {
+  --ann-max-width: 120rem;
+}
+
+.announcements {
+  width: 100%;
+  max-width: var(--ann-max-width);
+  margin: 0 auto;
+  position: relative;
+}
+
+.announcements__header {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-sm);
+  margin-bottom: var(--sp-base);
+}
+
+.announcements__flag {
+  width: 3rem;
+  height: 2.4rem;
+}
+
+.announcements__flag svg {
+  width: 100%;
+  height: 100%;
+}
+
+.announcements__title {
+  font-family: var(--ff-headings);
+  font-size: var(--fs-h6);
+  color: var(--clr-primary-base);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.announcements__deco {
+  flex: 1;
+  height: 0.1rem;
+  background: linear-gradient(
+    90deg,
+    var(--clr-primary-base) 0%,
+    transparent 100%
+  );
+  margin-left: var(--sp-base);
+}
+
+.announcements__track {
+  position: relative;
+  padding: var(--sp-lg) 0;
+}
+
+.announcements__chicane {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+}
+
+.announcements__line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 0.15rem;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--clr-gray-600) 0px,
+    var(--clr-gray-600) 2rem,
+    transparent 2rem,
+    transparent 2.5rem
+  );
+}
+
+.announcements__line--top {
+  top: 20%;
+}
+
+.announcements__line--bottom {
+  bottom: 20%;
+}
+
+.announcements__card {
+  background: linear-gradient(
+    135deg,
+    var(--clr-bg-surface) 0%,
+    var(--clr-bg-base) 100%
+  );
+  border: 0.15rem solid var(--clr-gray-600);
+  border-radius: var(--br-base);
+  padding: var(--sp-lg);
+  position: relative;
+  overflow: hidden;
+  height: 40rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.announcements__card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 0.3rem;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--clr-primary-base) 0px,
+    var(--clr-primary-base) 1rem,
+    var(--clr-bg-surface) 1rem,
+    var(--clr-bg-surface) 2rem
+  );
+}
+
+.announcements__card::after {
+  content: "E-CACTUS";
+  position: absolute;
+  bottom: var(--sp-smlst);
+  right: var(--sp-base);
+  font-family: var(--ff-mono);
+  font-size: 1.2rem;
+  color: var(--clr-gray-500);
+  letter-spacing: 0.2em;
+}
+
+.announcements__slides {
+  position: relative;
+  min-height: 8rem;
+  margin-left: 5rem;
+  margin-bottom: 2.5rem;
+}
+
+.announcements__slide {
+  display: none;
+  animation: slideIn 0.4s ease;
+}
+
+.announcements__slide--active {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sp-base);
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(2rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.announcements__icon {
+  flex-shrink: 0;
+  width: 4rem;
+  height: 4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--clr-bg-base);
+  border: 0.15rem solid var(--clr-primary-dk);
+  border-radius: var(--br-lg);
+}
+
+.announcements__icon svg {
+  width: 2rem;
+  height: 2rem;
+  color: var(--clr-primary-base);
+}
+
+.announcements__info {
+  flex: 1;
+}
+
+.announcements__message {
+  font-size: var(--fs-h6);
+  color: var(--clr-text-base);
+  line-height: var(--lh-regular);
+  margin-bottom: var(--sp-sm);
+}
+
+.announcements__date {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-micro);
+  font-family: var(--ff-mono);
+  font-size: var(--fs-sm);
+  color: var(--clr-primary-base);
+}
+
+.announcements__date svg {
+  flex-shrink: 0;
+}
+
+.announcements__controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-lg);
+  margin-top: var(--sp-base);
+}
+
+.announcements__btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 4.4rem;
+  height: 4.4rem;
+  background: var(--clr-bg-surface);
+  border: 0.15rem solid var(--clr-gray-500);
+  border-radius: var(--br-lg);
+  color: var(--clr-text-muted);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.announcements__btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--clr-primary-base),
+    transparent
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.announcements__btn:hover {
+  border-color: var(--clr-primary-base);
+  color: var(--clr-primary-base);
+  transform: scale(1.05);
+}
+
+.announcements__btn:hover::before {
+  left: 100%;
+  opacity: 0.3;
+}
+
+.announcements__btn svg {
+  width: 2rem;
+  height: 2rem;
+}
+
+.announcements__indicators {
+  display: flex;
+  gap: var(--sp-sm);
+}
+
+.announcements__dot {
+  width: 1.6rem;
+  height: 1.6rem;
+  background: transparent;
+  border: 0.15rem solid var(--clr-gray-500);
+  border-radius: var(--br-base);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.announcements__dot-inner {
+  width: 0;
+  height: 0;
+  background: var(--clr-primary-base);
+  border-radius: var(--br-none);
+  transition: all 0.2s ease;
+}
+
+.announcements__dot:hover {
+  border-color: var(--clr-primary-dk);
+}
+
+.announcements__dot--active {
+  border-color: var(--clr-primary-base);
+}
+
+.announcements__dot--active .announcements__dot-inner {
+  width: 100%;
+  height: 100%;
+}
+
+.announcements__lap-counter {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  align-items: baseline;
+  gap: 0.2rem;
+  font-family: var(--ff-mono);
+  padding: var(--sp-smlst) var(--sp-sm);
+  background: var(--clr-bg-surface);
+  border: 0.1rem solid var(--clr-gray-600);
+  border-radius: var(--br-base);
+}
+
+.announcements__lap-label {
+  font-size: var(--fs-sm);
+  color: var(--clr-gray-400);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.announcements__lap-current {
+  font-size: var(--fs-h6);
+  color: var(--clr-primary-base);
+  line-height: 1;
+}
+
+.announcements__lap-separator {
+  color: var(--clr-gray-500);
+}
+
+.announcements__lap-total {
+  font-size: var(--fs-base);
+  color: var(--clr-gray-400);
+}
+
+@media (max-width: 768px) {
+  .announcements__header {
+    justify-content: center;
+  }
+
+  .announcements__deco {
+    display: none;
+  }
+
+  .announcements__card {
+    padding: var(--sp-base);
+  }
+
+  .announcements__slides {
+    margin-left: 0;
+    min-height: 6rem;
+  }
+
+  .announcements__slide--active {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .announcements__icon {
+    width: 3.5rem;
+    height: 3.5rem;
+  }
+
+  .announcements__icon svg {
+    width: 1.6rem;
+    height: 1.6rem;
+  }
+
+  .announcements__controls {
+    gap: var(--sp-base);
+  }
+
+  .announcements__btn {
+    width: 4rem;
+    height: 4rem;
+  }
+
+  .announcements__lap-counter {
+    position: relative;
+    margin-top: var(--sp-base);
+  }
+}
+
+/* ========================================
+    CUSTOM CURSOR
+    ======================================== */
 html {
   cursor: none;
 }
@@ -598,6 +1014,12 @@ html {
   mix-blend-mode: difference;
 }
 
+.cursor__dot,
+.cursor__ring {
+  pointer-events: none; /* Impede que o próprio cursor bloqueie os cliques/hovers do mouse */
+  will-change: transform; /* Avisa a placa de vídeo antecipadamente que este elemento vai se mover */
+}
+
 .cursor__dot {
   position: absolute;
   width: 0.8rem;
@@ -605,7 +1027,10 @@ html {
   background: var(--clr-primary-base);
   border-radius: 50%;
   transform: translate(-50%, -50%);
-  transition: width 0.2s ease, height 0.2s ease, background 0.2s ease;
+  transition:
+    width 0.2s ease,
+    height 0.2s ease,
+    background 0.2s ease;
 }
 
 .cursor__ring {
@@ -615,7 +1040,11 @@ html {
   border: 0.1rem solid var(--clr-primary-base);
   border-radius: 50%;
   transform: translate(-50%, -50%);
-  transition: width 0.3s ease, height 0.3s ease, border-color 0.2s ease, opacity 0.2s ease;
+  transition:
+    width 0.3s ease,
+    height 0.3s ease,
+    border-color 0.2s ease,
+    opacity 0.2s ease;
 }
 
 .cursor--hover .cursor__dot {
@@ -690,5 +1119,115 @@ html {
   .footer__inner {
     flex-direction: column;
     text-align: center;
+  }
+}
+
+/* O contêiner pai de tudo DEVE ter position relative */
+.announcements__card {
+  position: relative;
+}
+
+/* O contêiner do carro */
+.announcements__car {
+  position: absolute;
+  bottom: 0px; /* Ajuste esse valor (ex: -20px ou 10px) para alinhar com a sua linha amarela tracejada */
+  left: var(--pos, 50%); /* Posição inicial */
+  transform: translateX(
+    -50%
+  ); /* Centraliza o eixo do carro exatamento no ponto do 'left' */
+  /* Garante que fique por cima de tudo */
+  transition: left 0.5s ease-in-out; /* ISSO cria o efeito de deslizar! */
+  width: 80px;
+  will-change: left;
+}
+
+/* A imagem em si */
+.car-icon-png {
+  width: 100%; /* A imagem vai seguir o tamanho da div pai (80px) */
+  min-width: 60px;
+  height: auto;
+  display: block;
+  pointer-events: none;
+}
+
+/* Countdown */
+.countdown {
+  margin-top: var(--sp-sm);
+  margin-bottom: var(--sp-base);
+  padding: var(--sp-2xl) 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.countdown__container {
+  text-align: center;
+}
+
+.countdown__title {
+  color: var(--clr-primary-base); /* A sua cor de destaque (amarelo) */
+  margin-bottom: var(--sp-xl);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-weight: 400;
+}
+
+.countdown__timer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--sp-md); /* Espaço entre as caixas */
+}
+
+.countdown__block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.03); /* Fundo levemente translúcido */
+  border: 1px solid var(--clr-gray-700);
+  border-radius: 8px;
+  min-width: 90px;
+  padding: var(--sp-lg) var(--sp-md);
+  backdrop-filter: blur(4px); /* Efeito de vidro moderno */
+}
+
+.countdown__value {
+  font-size: 2.5rem;
+  font-weight: 700;
+  font-family: monospace; /* Fonte monoespaçada fica ótimo em contadores */
+  color: #ffffff;
+  line-height: 1;
+}
+
+.countdown__label {
+  font-size: 0.75rem;
+  color: var(--clr-gray-400); /* Usa sua variável de cinza */
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-top: 0.5rem;
+}
+
+.countdown__separator {
+  font-size: 2rem;
+  font-weight: bold;
+  color: var(--clr-primary-base);
+  margin-bottom: 1.5rem; /* Levanta os dois pontos para alinhar com os números grandes */
+}
+
+/* Responsividade: Diminui o tamanho em celulares */
+@media (max-width: 600px) {
+  .countdown__timer {
+    gap: var(--sp-xs);
+  }
+  .countdown__block {
+    min-width: 65px;
+    padding: var(--sp-md) var(--sp-sm);
+  }
+  .countdown__value {
+    font-size: 1.75rem;
+  }
+  .countdown__title {
+    font-size: 1rem;
   }
 }

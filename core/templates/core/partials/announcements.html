@@ -1,0 +1,220 @@
+{% load static %}
+
+<div class="announcements">
+  <div class="announcements__header">
+    <div class="announcements__flag">
+      <svg viewBox="0 0 24 24" fill="none">
+        <rect
+          x="2"
+          y="4"
+          width="16"
+          height="14"
+          fill="var(--clr-bg-surface)"
+          stroke="var(--clr-primary-base)"
+          stroke-width="1"
+        />
+        <rect x="2" y="4" width="5" height="7" fill="var(--clr-primary-base)" />
+        <rect x="7" y="4" width="5" height="7" fill="var(--clr-text-base)" />
+        <rect
+          x="12"
+          y="4"
+          width="6"
+          height="7"
+          fill="var(--clr-primary-base)"
+        />
+      </svg>
+    </div>
+    <span class="announcements__title">Box de Avisos</span>
+    <div class="announcements__deco"></div>
+  </div>
+
+  <div class="announcements__track">
+    <div class="announcements__chicane">
+      <div class="announcements__line announcements__line--top"></div>
+      <div class="announcements__line announcements__line--bottom"></div>
+    </div>
+
+    <div class="announcements__card">
+      <div class="announcements__car">
+        <img
+          src="{% static 'img/car-icon.png' %}"
+          alt="Ícone Fórmula SAE"
+          class="car-icon-png"
+        />
+      </div>
+
+      <div class="announcements__slides">
+        {% for announcement in announcements %}
+        <div
+          class="announcements__slide{% if forloop.first %} announcements__slide--active{% endif %}"
+          data-index="{{ forloop.counter0 }}"
+        >
+          <div class="announcements__icon">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path d="M12 2L2 7l10 5 10-5-10-5z" />
+              <path d="M2 17l10 5 10-5" />
+              <path d="M2 12l10 5 10-5" />
+            </svg>
+          </div>
+          <div class="announcements__info">
+            <p class="announcements__message">{{ announcement.message }}</p>
+            {% if announcement.date %}
+            <span class="announcements__date">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                width="14"
+                height="14"
+              >
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                <line x1="16" y1="2" x2="16" y2="6" />
+                <line x1="8" y1="2" x2="8" y2="6" />
+                <line x1="3" y1="10" x2="21" y2="10" />
+              </svg>
+              {{ announcement.date }}
+            </span>
+            {% endif %}
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  <div class="announcements__controls">
+    <button
+      class="announcements__btn announcements__btn--prev"
+      aria-label="Aviso anterior"
+    >
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+      >
+        <polyline points="15 18 9 12 15 6" />
+      </svg>
+    </button>
+
+    <div class="announcements__indicators">
+      {% for announcement in announcements %}
+      <button
+        class="announcements__dot{% if forloop.first %} announcements__dot--active{% endif %}"
+        data-index="{{ forloop.counter0 }}"
+        aria-label="Aviso {{ forloop.counter }}"
+      >
+        <span class="announcements__dot-inner"></span>
+      </button>
+      {% endfor %}
+    </div>
+
+    <button
+      class="announcements__btn announcements__btn--next"
+      aria-label="Próximo aviso"
+    >
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+      >
+        <polyline points="9 18 15 12 9 6" />
+      </svg>
+    </button>
+  </div>
+
+  <div class="announcements__lap-counter">
+    <span class="announcements__lap-label">Lap</span>
+    <span class="announcements__lap-current">1</span>
+    <span class="announcements__lap-separator">/</span>
+    <span class="announcements__lap-total">{{ announcements|length }}</span>
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const container = document.querySelector(".announcements");
+    if (!container) return;
+
+    const slides = container.querySelectorAll(".announcements__slide");
+    const dots = container.querySelectorAll(".announcements__dot");
+    const prevBtn = container.querySelector(".announcements__btn--prev");
+    const nextBtn = container.querySelector(".announcements__btn--next");
+    const lapCurrent = container.querySelector(".announcements__lap-current");
+    const lapTotal = container.querySelector(".announcements__lap-total");
+    const car = container.querySelector(".announcements__car");
+
+    if (slides.length === 0) return;
+
+    let currentIndex = 0;
+    const totalSlides = slides.length;
+
+    // Define o valor total de laps apenas uma vez
+    lapTotal.textContent = totalSlides;
+
+    // Inicializa a posição do carro na primeira carga via Variável CSS
+    if (car) {
+      const initialPos = totalSlides > 1 ? "5%" : "50%";
+      car.style.setProperty("--pos", initialPos);
+    }
+
+    function showSlide(index) {
+      // Evita recalcular tudo se o usuário clicar no dot que já está ativo
+      if (index === currentIndex) return;
+
+      // O requestAnimationFrame empacota as mudanças para evitar "trancos"
+      requestAnimationFrame(() => {
+        // 1. Remove as classes APENAS do elemento atual (Sem forEach)
+        slides[currentIndex].classList.remove("announcements__slide--active");
+        dots[currentIndex].classList.remove("announcements__dot--active");
+
+        // 2. Adiciona as classes no NOVO elemento
+        slides[index].classList.add("announcements__slide--active");
+        dots[index].classList.add("announcements__dot--active");
+
+        // 3. Atualiza o texto do contador
+        lapCurrent.textContent = index + 1;
+
+        // 4. Delega a posição do carro para a Placa de Vídeo (Variável CSS)
+        if (car) {
+          if (totalSlides > 1) {
+            const percentage = (index / (totalSlides - 1)) * 90 + 5;
+            car.style.setProperty("--pos", percentage + "%");
+          } else {
+            car.style.setProperty("--pos", "50%");
+          }
+        }
+
+        // Atualiza o índice global para a próxima interação
+        currentIndex = index;
+      });
+    }
+
+    function nextSlide() {
+      const nextIndex = (currentIndex + 1) % totalSlides;
+      showSlide(nextIndex);
+    }
+
+    function prevSlide() {
+      const prevIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+      showSlide(prevIndex);
+    }
+
+    if (nextBtn) nextBtn.addEventListener("click", nextSlide);
+    if (prevBtn) prevBtn.addEventListener("click", prevSlide);
+
+    dots.forEach((dot) => {
+      dot.addEventListener("click", () => {
+        const index = parseInt(dot.dataset.index, 10);
+        showSlide(index);
+      });
+    });
+  });
+</script>

@@ -15,6 +15,8 @@
 
     <main>
         {% include 'core/partials/hero.html' %}
+        {% include 'core/partials/countdown.html' %}
+        {% include 'core/partials/announcements.html' with announcements=announcements %}
         {% include 'core/partials/section-about.html' %}
         {% include 'core/partials/section-specs.html' %}
         {% include 'core/partials/section-team.html' %}
@@ -23,5 +25,54 @@
 
     {% include 'core/partials/footer.html' %}
     <script src="{% static 'core/js/cursor.js' %}"></script>
+    <script>
+document.addEventListener('DOMContentLoaded', function() {
+    const timerElement = document.getElementById('competition-timer');
+    if (!timerElement) return;
+
+    const targetDateString = timerElement.getAttribute('data-target');
+    const targetDate = new Date(targetDateString).getTime();
+
+    const daysEl = document.getElementById('cd-days');
+    const hoursEl = document.getElementById('cd-hours');
+    const minutesEl = document.getElementById('cd-minutes');
+    const secondsEl = document.getElementById('cd-seconds');
+
+    // Variáveis para guardar o estado anterior e evitar reescrever o DOM à toa
+    let lastDays = "", lastHours = "", lastMinutes = "", lastSeconds = "";
+
+    function updateCountdown() {
+        const now = new Date().getTime();
+        const distance = targetDate - now;
+
+        if (distance < 0) {
+            timerElement.innerHTML = "<h3 style='color: var(--clr-primary-base); font-size: 1.5rem;'>Bandeira Verde! A competição já começou!</h3>";
+            return;
+        }
+
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        const dStr = String(days).padStart(2, '0');
+        const hStr = String(hours).padStart(2, '0');
+        const mStr = String(minutes).padStart(2, '0');
+        const sStr = String(seconds).padStart(2, '0');
+
+        // Só atualiza o HTML se o valor for diferente do frame anterior
+        if (dStr !== lastDays) { daysEl.textContent = dStr; lastDays = dStr; }
+        if (hStr !== lastHours) { hoursEl.textContent = hStr; lastHours = hStr; }
+        if (mStr !== lastMinutes) { minutesEl.textContent = mStr; lastMinutes = mStr; }
+        if (sStr !== lastSeconds) { secondsEl.textContent = sStr; lastSeconds = sStr; }
+
+        // Chama a função novamente sincronizada com a tela do usuário
+        requestAnimationFrame(updateCountdown);
+    }
+
+    // Inicia o loop otimizado
+    requestAnimationFrame(updateCountdown);
+});
+</script>
 </body>
 </html>
