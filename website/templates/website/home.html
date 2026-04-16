@@ -5,26 +5,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Formula SAE UFERSA - Electric Racing Team</title>
-    <link rel="stylesheet" href="{% static 'core/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'website/css/style.css' %}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    {% include 'core/partials/header.html' %}
+    {% include 'website/partials/header.html' %}
 
     <main>
-        {% include 'core/partials/hero.html' %}
-        {% include 'core/partials/countdown.html' %}
-        {% include 'core/partials/announcements.html' with announcements=announcements %}
-        {% include 'core/partials/section-about.html' %}
-        {% include 'core/partials/section-specs.html' %}
-        {% include 'core/partials/section-team.html' %}
-        {% include 'core/partials/section-contact.html' %}
+        {% include 'website/partials/hero.html' %}
+        {% include 'website/partials/countdown.html' %}
+        {% include 'website/partials/announcements.html' with announcements=announcements %}
+        {% include 'website/partials/section-about.html' %}
+        {% include 'website/partials/section-specs.html' %}
+        {% include 'website/partials/section-team.html' %}
+        {% include 'website/partials/section-contact.html' %}
     </main>
 
-    {% include 'core/partials/footer.html' %}
-    <script src="{% static 'core/js/cursor.js' %}"></script>
+    {% include 'website/partials/footer.html' %}
+    <script src="{% static 'website/js/cursor.js' %}"></script>
     <script>
 document.addEventListener('DOMContentLoaded', function() {
     const timerElement = document.getElementById('competition-timer');

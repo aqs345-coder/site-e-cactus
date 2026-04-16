@@ -37,7 +37,7 @@
     <div class="announcements__card">
       <div class="announcements__car">
         <img
-          src="{% static 'img/car-icon.png' %}"
+          src="{% static 'website/img/car-icon.png' %}"
           alt="Ícone Fórmula SAE"
           class="car-icon-png"
         />
@@ -62,7 +62,7 @@
             </svg>
           </div>
           <div class="announcements__info">
-            <p class="announcements__message">{{ announcement.message }}</p>
+            <p class="announcements__message">{{ announcement.message|safe }}</p>
             {% if announcement.date %}
             <span class="announcements__date">
               <svg

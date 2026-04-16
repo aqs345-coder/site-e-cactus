@@ -23,6 +23,9 @@ Thumbs.db
 *.sqlite3
 media/
 static_collected/
+migrations/
+migrations/*
+*migrations/*
 
 # Virtual environment
 .venv/

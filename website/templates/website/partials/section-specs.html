@@ -1,0 +1,21 @@
+<section id="specs" class="section section--alt">
+    <div class="container">
+        <div class="section__header">
+            <h2 class="section__title">Especificações Técnicas</h2>
+            <p class="section__subtitle">Números que definem a nossa máquina</p>
+        </div>
+        
+        <div class="specs__grid">
+            {% for spec in specs %}
+                <div class="spec-card">
+                    <span class="spec-card__value">{{ spec.valor }}</span>
+                    <span class="spec-card__unit">{{ spec.unidade }}</span>
+                    <span class="spec-card__label">{{ spec.rotulo }}</span>
+                </div>
+            {% empty %}
+                <p style="color: var(--clr-gray-400); text-align: center; width: 100%;">Nenhuma especificação disponível no momento.</p>
+            {% endfor %}
+            </div>
+        
+    </div>
+</section>

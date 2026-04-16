@@ -435,74 +435,221 @@ h6 {
 /* ========================================
    ABOUT SECTION
    ======================================== */
-.about__grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(28rem, 1fr));
-  gap: var(--sp-lg);
+/* 1. O Container Externo */
+.about__carousel {
+  width: 100%;
+
+  /* CRUCIAL: É isto que esconde os cards que saem da caixa */
+  overflow: hidden;
+  position: relative;
+
+  /* Afasta os cards da borda do contêiner para não parecerem "colados" */
+  padding: 2rem 1rem;
+
+  /* O Novo Design: Borda amarela e cantos arredondados */
+  border: 2px solid var(--clr-primary-lt); /* Usa a sua variável de amarelo */
+  border-radius: 12px;
+
+  /* Opcional: Um fundo ligeiramente mais escuro para destacar a área do carrossel */
+  background: var(--clr-gray-700);
 }
 
+/* 2. O Trilho */
+.about__track {
+  display: flex;
+  gap: 2rem;
+  width: max-content;
+  animation: scroll-carousel 30s linear infinite;
+
+  /* Aceleração de Hardware Pura */
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+.about__carousel:hover .about__track {
+  animation-play-state: paused;
+}
+
+/* 3. O Card - Design Modernizado e Leve */
+.about__card {
+  width: 320px;
+  min-height: 450px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+
+  background: var(--clr-bg-surface);
+
+  /* DESIGN PREMIUM: Em vez de uma borda quadrada pesada, usamos uma borda quase invisível 
+     nas laterais e uma linha de destaque ("Racing Stripe") mais grossa no topo. */
+  border: 1px solid rgba(255, 255, 255, 0.03);
+  border-top: 3px solid var(--clr-primary-dk);
+  border-radius: 8px;
+
+  /* Mais respiro interno deixa o design mais elegante */
+  padding: 2.5rem 1.5rem;
+
+  /* Sombra base estática para descolar o card do fundo escuro */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+
+  /* Transição focada apenas em cor e sombra (extremamente leve para a CPU/GPU) */
+  transition:
+    border-top-color 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+/* Efeito Hover Enxuto */
+.about__card:hover {
+  /* Acende a faixa superior e as laterais */
+  border-top-color: var(--clr-primary-base);
+  border-color: rgba(255, 255, 255, 0.1);
+
+  /* Aprofunda a sombra em vez de mover o card. Dá sensação de foco na leitura. */
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+}
+
+/* ----------------------------------------------------
+   NOVA CLASSE: Configuração da Cor e Tipografia 
+---------------------------------------------------- */
+
 .about__card-title {
-  font-size: 10px;
-  font-size: var(--fs-h4);
-  margin-bottom: var(--sp-sm);
-  color: var(--clr-primary-base);
+  color: var(--clr-text-base);
+  font-size: var(--fs-h3);
+  line-height: 1.3;
+  margin-bottom: var(--sp-md, 1rem);
+  padding-bottom: var(--sp-sm, 0.5rem);
+
+  /* ESTILO TECH: Maiúsculas, espaçadas e com uma linha divisória super sutil */
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .about__card-text {
-  font-size: var(--fs-base, 1.6rem);
   color: var(--clr-text-muted);
-  line-height: var(--lh-regular);
+  line-height: var(--lh-regular, 1.6);
+  font-size: var(--fs-base, 1rem);
+}
+
+/* Destaca textos em negrito colocados pelo Redator no Summernote */
+.about__card-text b,
+.about__card-text strong {
+  color: var(--clr-text-base);
+  font-weight: 600;
+  /* Um leve brilho amarelo no negrito reforça a identidade da equipa */
+  text-shadow: 0 0 8px rgba(250, 204, 21, 0.2);
+}
+
+.about__card-title {
+  color: var(--clr-text-base,); /* Use sua variável de cor de texto aqui */
+  line-height: var(--lh-headings, 2);
+  font-size: var(--fs-h3);
+  margin-bottom: var(--sp-sm);
+}
+
+/* 4. A Mágica do Loop Infinito */
+@keyframes scroll-carousel {
+  0% {
+    /* translate3d obriga a GPU a assumir o trabalho, poupando a CPU (Processador) */
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(calc(-50% - 1rem), 0, 0);
+  }
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .about__card {
+    width: 280px;
+    min-height: 400px;
+  }
+  .about__carousel {
+    padding: 1rem 0.5rem; /* Ajusta o padding da moldura amarela no telemóvel */
+  }
 }
 
 /* ========================================
    SPECS SECTION
    ======================================== */
+/* 1. O Layout da Grelha (Grid) */
 .specs__grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
-  gap: var(--sp-lg);
+  /* Cria uma grelha responsiva automática. 
+     Os cartões terão no mínimo 180px e preencherão o espaço disponível. */
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
 }
 
+/* 2. O Cartão de Especificação (Espelhando o design do About) */
 .spec-card {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: center; /* Centraliza o texto horizontalmente */
+  justify-content: center;
   text-align: center;
-  padding: var(--sp-xl);
-  background: var(--clr-bg-base);
-  border: 0.1rem solid var(--clr-gray-600);
-  border-radius: var(--br-base);
+
+  background: var(--clr-bg-surface);
+
+  /* A mesma "Racing Stripe" no topo e borda subtil */
+  border: 1px solid rgba(255, 255, 255, 0.03);
+  border-top: 3px solid var(--clr-primary-dk);
+  border-radius: 8px;
+
+  padding: 2rem 1.5rem;
+
+  /* Sombra base estática */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+
+  /* Transição idêntica à da secção "Sobre" */
   transition:
-    border-color 0.2s ease,
-    transform 0.2s ease;
+    border-top-color 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
+/* Efeito Hover do Cartão de Especificação */
 .spec-card:hover {
-  border-color: var(--clr-primary-dk);
-  transform: translateY(-0.2rem);
+  border-top-color: var(--clr-primary-base);
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
 }
 
+/* 3. Tipografia dos Dados Técnicos */
+
+/* O Número Principal */
 .spec-card__value {
-  font-family: var(--ff-headings);
-  font-size: var(--fs-h2, 5rem);
-  color: var(--clr-primary-base);
+  color: var(--clr-text-base);
+  font-size: 3.5rem; /* Número bem grande para impacto */
+  font-weight: 700;
   line-height: 1;
+
+  /* Leve brilho amarelo para destacar a performance */
+  text-shadow: 0 0 15px rgba(250, 204, 21, 0.15);
 }
 
+/* A Unidade de Medida (kg, kW, s) */
 .spec-card__unit {
-  font-family: var(--ff-mono);
-  font-size: var(--fs-base, 1.6rem);
-  color: var(--clr-text-muted);
-  margin-top: var(--sp-smlst);
+  color: var(--clr-primary-base); /* Usa a cor de destaque (Amarelo) */
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
 }
 
+/* O Rótulo (Massa Total, Potência, etc.) */
 .spec-card__label {
-  font-family: var(--ff-headings);
-  font-size: var(--fs-sm, 1.4rem);
   color: var(--clr-text-muted);
+  font-size: 0.85rem;
+  font-weight: 500;
+
+  /* Estilo Tech idêntico ao título dos cartões anteriores */
   text-transform: uppercase;
-  letter-spacing: 0.1em;
-  margin-top: var(--sp-sm);
+  letter-spacing: 1.5px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08); /* Linha divisória agora em cima do rótulo */
+  padding-top: 0.75rem;
+  width: 80%; /* Não deixa a linha encostar nas bordas do cartão */
 }
 
 /* ========================================

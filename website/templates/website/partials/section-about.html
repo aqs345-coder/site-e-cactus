@@ -1,0 +1,39 @@
+<section id="about" class="section">
+  <div class="container">
+    
+    <div class="section__header">
+      <h2 class="section__title">Sobre a Equipe</h2>
+      <p class="section__subtitle">Tecnologia e inovação em cada componente</p>
+    </div>
+    
+    <div class="about__carousel">
+      
+      <div class="about__track">
+        
+        {% for item in about_items %}
+          <div class="card about__card">
+            <h3 class="about__card-title">{{ item.titulo }}</h3>
+            <p class="about__card-text">
+              {{ item.descricao|safe }}
+            </p>
+          </div>
+        {% empty %}
+          <p style="color: var(--clr-gray-400); text-align: center; width: 100%;">Nenhuma informação disponível no momento.</p>
+        {% endfor %}
+
+        {% if about_items %}
+          {% for item in about_items %}
+            <div class="card about__card" aria-hidden="true">
+              <h3 class="about__card-title">{{ item.titulo }}</h3>
+              <p class="about__card-text">
+                {{ item.descricao|safe }}
+              </p>
+            </div>
+          {% endfor %}
+        {% endif %}
+
+      </div>
+    </div>
+    
+  </div>
+</section>
