@@ -1,78 +1,65 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formula SAE UFERSA - Electric Racing Team</title>
-    <link rel="stylesheet" href="{% static 'website/css/style.css' %}">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
-</head>
-<body>
-    {% include 'website/partials/header.html' %}
+{% extends 'website/base.html' %}
 
-    <main>
-        {% include 'website/partials/hero.html' %}
-        {% include 'website/partials/countdown.html' %}
-        {% include 'website/partials/announcements.html' with announcements=announcements %}
-        {% include 'website/partials/section-about.html' %}
-        {% include 'website/partials/section-specs.html' %}
-        {% include 'website/partials/section-team.html' %}
-        {% include 'website/partials/section-contact.html' %}
-    </main>
+{% block title %}Formula SAE UFERSA - Electric Racing Team{% endblock %}
 
-    {% include 'website/partials/footer.html' %}
-    <script src="{% static 'website/js/cursor.js' %}"></script>
+{% block content %}
+    {% include 'website/partials/hero.html' %}
+    {% include 'website/partials/countdown.html' %}
+    {% include 'website/partials/announcements.html' with announcements=announcements %}
+    {% include 'website/partials/section-about.html' %}
+    {% include 'website/partials/section-specs.html' %}
+    {% include 'website/partials/section-team.html' %}
+    {% include 'website/partials/section-contact.html' %}
+{% endblock %}
+
+{% block extra_js %}
     <script>
-document.addEventListener('DOMContentLoaded', function() {
-    const timerElement = document.getElementById('competition-timer');
-    if (!timerElement) return;
+    document.addEventListener('DOMContentLoaded', function() {
+        const timerElement = document.getElementById('competition-timer');
+        if (!timerElement) return;
 
-    const targetDateString = timerElement.getAttribute('data-target');
-    const targetDate = new Date(targetDateString).getTime();
+        const targetDateString = timerElement.getAttribute('data-target');
+        const targetDate = new Date(targetDateString).getTime();
 
-    const daysEl = document.getElementById('cd-days');
-    const hoursEl = document.getElementById('cd-hours');
-    const minutesEl = document.getElementById('cd-minutes');
-    const secondsEl = document.getElementById('cd-seconds');
+        const daysEl = document.getElementById('cd-days');
+        const hoursEl = document.getElementById('cd-hours');
+        const minutesEl = document.getElementById('cd-minutes');
+        const secondsEl = document.getElementById('cd-seconds');
 
-    // Variáveis para guardar o estado anterior e evitar reescrever o DOM à toa
-    let lastDays = "", lastHours = "", lastMinutes = "", lastSeconds = "";
+        // Variáveis para guardar o estado anterior e evitar reescrever o DOM à toa
+        let lastDays = "", lastHours = "", lastMinutes = "", lastSeconds = "";
 
-    function updateCountdown() {
-        const now = new Date().getTime();
-        const distance = targetDate - now;
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const distance = targetDate - now;
 
-        if (distance < 0) {
-            timerElement.innerHTML = "<h3 style='color: var(--clr-primary-base); font-size: 1.5rem;'>Bandeira Verde! A competição já começou!</h3>";
-            return;
+            if (distance < 0) {
+                timerElement.innerHTML = "<h3 style='color: var(--clr-primary-base); font-size: 1.5rem;'>Bandeira Verde! A competição já começou!</h3>";
+                return;
+            }
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            const dStr = String(days).padStart(2, '0');
+            const hStr = String(hours).padStart(2, '0');
+            const mStr = String(minutes).padStart(2, '0');
+            const sStr = String(seconds).padStart(2, '0');
+
+            // Só atualiza o HTML se o valor for diferente do frame anterior
+            if (dStr !== lastDays) { daysEl.textContent = dStr; lastDays = dStr; }
+            if (hStr !== lastHours) { hoursEl.textContent = hStr; lastHours = hStr; }
+            if (mStr !== lastMinutes) { minutesEl.textContent = mStr; lastMinutes = mStr; }
+            if (sStr !== lastSeconds) { secondsEl.textContent = sStr; lastSeconds = sStr; }
+
+            // Chama a função novamente sincronizada com a tela do usuário
+            requestAnimationFrame(updateCountdown);
         }
 
-        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-        const dStr = String(days).padStart(2, '0');
-        const hStr = String(hours).padStart(2, '0');
-        const mStr = String(minutes).padStart(2, '0');
-        const sStr = String(seconds).padStart(2, '0');
-
-        // Só atualiza o HTML se o valor for diferente do frame anterior
-        if (dStr !== lastDays) { daysEl.textContent = dStr; lastDays = dStr; }
-        if (hStr !== lastHours) { hoursEl.textContent = hStr; lastHours = hStr; }
-        if (mStr !== lastMinutes) { minutesEl.textContent = mStr; lastMinutes = mStr; }
-        if (sStr !== lastSeconds) { secondsEl.textContent = sStr; lastSeconds = sStr; }
-
-        // Chama a função novamente sincronizada com a tela do usuário
+        // Inicia o loop otimizado
         requestAnimationFrame(updateCountdown);
-    }
-
-    // Inicia o loop otimizado
-    requestAnimationFrame(updateCountdown);
-});
-</script>
-</body>
-</html>
+    });
+    </script>
+{% endblock %}
