@@ -1,8 +1,8 @@
 import json
 
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 
-from .models import Announcement, EspecificacaoTecnica, QuemSomosCard
+from .models import Announcement, EspecificacaoTecnica, QuemSomosCard, Subsistema
 
 
 def index(request):
@@ -19,3 +19,28 @@ def index(request):
     }
 
     return render(request, "website/home.html", context)
+
+
+def about(request):
+    """View para a listagem dos cards"""
+    # PERFORMANCE: .only() diz ao banco de dados para NÃO carregar o 'conteudo_pagina'
+    # que é pesado, já que não vamos usá-lo na listagem dos cards.
+    subsistemas = Subsistema.objects.filter(ativo=True).only(
+        "nome", "slug", "resumo_card", "icone"
+    )
+
+    context = {
+        "subsistemas": subsistemas,
+    }
+    return render(request, "website/about.html", context)
+
+
+def subsystem_detail(request, slug):
+    """View para a página específica do subsistema"""
+    # get_object_or_404 tenta achar o item, se a URL estiver errada, retorna erro 404 seguro
+    subsistema = get_object_or_404(Subsistema, slug=slug, ativo=True)
+
+    context = {
+        "subsistema": subsistema,
+    }
+    return render(request, "website/subsystem_detail.html", context)

@@ -1,0 +1,24 @@
+{% extends 'website/base.html' %}
+
+{% block title %}{{ subsistema.nome }} | Fórmula SAE UFERSA{% endblock %}
+
+{% block content %}
+<section class="section">
+    <div class="container">
+        
+        <a href="{% url 'website:about' %}" style="color: var(--clr-text-muted); text-decoration: none; display: inline-block; margin-bottom: 2rem;">
+            &larr; Voltar para Subsistemas
+        </a>
+
+        <div class="section__header" style="text-align: left;">
+            <h2 class="section__title">{{ subsistema.nome }}</h2>
+            <p class="section__subtitle">Detalhes Técnicos e Desenvolvimento</p>
+        </div>
+
+        <div class="subsistema-content" style="color: var(--clr-text-muted); line-height: 1.8;">
+            {{ subsistema.conteudo_pagina|safe }}
+        </div>
+        
+    </div>
+</section>
+{% endblock %}

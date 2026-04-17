@@ -1,0 +1,49 @@
+{% extends 'website/base.html' %} {% block title %}Sobre o Projeto | Fórmula SAE
+UFERSA{% endblock %} {% block content %}
+<section class="section">
+  <div class="container">
+    <div class="section__header">
+      <h2 class="section__title">
+        A Engenharia por Trás do Protótipo: Nossos Subsistemas
+      </h2>
+      <p class="section__subtitle">
+        Projetar e construir um carro elétrico tipo fórmula do zero é um desafio
+        de altíssima complexidade. Para transformar essa visão em realidade, a
+        equipe E-Cactus atua de forma estruturada através dos nossos
+        Subsistemas. Cada um deles funciona como uma engrenagem vital, reunindo
+        estudantes focados em resolver desafios específicos de engenharia,
+        tecnologia e operações. É a integração perfeita e a comunicação
+        constante entre a mecânica, a elétrica e a gestão que fazem o nosso
+        protótipo ganhar vida. Com total sinergia, garantimos a segurança, a
+        inovação e o alto desempenho necessários para as pistas da Fórmula SAE.
+        Conheça os departamentos que movem a nossa equipe:
+      </p>
+    </div>
+
+    <div class="specs__grid">
+      {% for sub in subsistemas %}
+      <a
+        href="{% url 'website:subsystem_detail' sub.slug %}"
+        class="spec-card"
+        style="text-decoration: none; cursor: pointer"
+      >
+        <h3 class="about__card-title">{{ sub.nome }}</h3>
+        <p
+          class="about__card-text"
+          style="text-align: center; font-size: 0.9rem"
+        >
+          {{ sub.resumo_card }}
+        </p>
+        <span
+          class="spec-card__label"
+          style="margin-top: 1rem; color: var(--clr-primary-base)"
+          >Ver Detalhes &rarr;</span
+        >
+      </a>
+      {% empty %}
+      <p>Nenhum subsistema cadastrado.</p>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}

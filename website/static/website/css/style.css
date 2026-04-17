@@ -95,6 +95,14 @@ body {
   background-color: var(--clr-bg-base);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Garante que a página tenha, no mínimo, 100% da altura da tela (Viewport Height) */
+  margin: 0;
+}
+
+main {
+  flex-grow: 1; /* Diz ao main: "Cresça e ocupe todo o espaço vazio que sobrar na tela" */
 }
 
 img,

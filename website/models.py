@@ -61,3 +61,50 @@ class EspecificacaoTecnica(models.Model):
 
     def __str__(self):
         return f"{self.rotulo}: {self.valor} {self.unidade}"
+
+
+class SobreProjeto(models.Model):
+    titulo = models.CharField("Título da Seção", max_length=100)
+    texto_geral = models.TextField("Descrição Geral")
+    video_url = models.URLField("URL do Vídeo (YouTube)", blank=True, null=True)
+
+    class Meta:
+        verbose_name = "Sobre - Geral"
+
+
+class Subsistema(models.Model):
+    # Identificação
+    nome = models.CharField("Nome do Subsistema", max_length=100)
+    slug = models.SlugField(
+        "URL Slug", unique=True, help_text="Preenchimento automático. Ex: powertrain"
+    )
+
+    # Área 1: Para o Card na página "Sobre"
+    resumo_card = models.CharField(
+        "Resumo do Card",
+        max_length=150,
+        help_text="Texto curto de chamada (Máx 150 caracteres).",
+    )
+    icone = models.CharField(
+        "Ícone SVG ou Classe",
+        max_length=100,
+        blank=True,
+        help_text="Opcional. Ex: fa-solid fa-car",
+    )
+
+    # Área 2: Para a Página Detalhada
+    conteudo_pagina = models.TextField(
+        "Conteúdo Completo", help_text="Texto completo com imagens e detalhes técnicos."
+    )
+
+    # Controles
+    ordem = models.IntegerField("Ordem de Exibição", default=0)
+    ativo = models.BooleanField("Ativo", default=True)
+
+    class Meta:
+        verbose_name = "Subsistema"
+        verbose_name_plural = "Subsistemas"
+        ordering = ["ordem"]
+
+    def __str__(self):
+        return self.nome
