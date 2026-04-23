@@ -254,7 +254,7 @@ h6 {
   left: 0;
   width: 100%;
   z-index: 1000;
-  background: hsla(220, 10%, 8%, 0.9);
+  background: hsla(220, 10%, 8%, 0.7);
   backdrop-filter: blur(1rem);
   border-bottom: 0.1rem solid var(--clr-gray-700);
 }
@@ -320,29 +320,81 @@ h6 {
   overflow: hidden;
 }
 
-.hero::before {
-  content: "";
+.hero__bg-image {
+  position: absolute;
+  /* Esticamos um pouco para cobrir as bordas brancas do blur */
+  /* top: -5%;
+  left: -5%; */
+  min-width: 100%;
+  min-height: 100%;
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  /* Desfoque aplicado apenas nesta DIV */
+  /* filter: blur(1px); */
+  z-index: -2;
+}
+
+/* 2. Camada do Gradiente Diagonal */
+.hero__bg-overlay {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background:
-    radial-gradient(
-      ellipse at 20% 50%,
-      hsla(48, 100%, 55%, 0.08) 0%,
-      transparent 50%
-    ),
-    radial-gradient(
-      ellipse at 80% 20%,
-      hsla(48, 100%, 55%, 0.05) 0%,
-      transparent 40%
-    );
-  pointer-events: none;
+
+  /* O DEGRADÊ MÁGICO:
+     Direção: "to top right" (vai do inferior esquerdo para o superior direito)
+     Cor 1: Preto/Cinza bem escuro com 95% de opacidade (Forte)
+     Cor 2: A mesma cor, mas com 0% de opacidade (Totalmente transparente) */
+  background: linear-gradient(
+    to top right,
+    rgba(15, 15, 20, 0.95) 10%,
+    rgba(15, 15, 20, 0.1) 100%
+  );
+
+  z-index: -1;
+  pointer-events: none; /* Garante que não bloqueie cliques nos botões */
+}
+
+.hero__logo {
+  width: 100%;
+
+  /* CONTROLE DE TAMANHO: Define o limite máximo que a logo pode crescer.
+     Ajuste este valor (ex: 300px, 400px, 500px) até ficar do tamanho ideal no PC. */
+  max-width: 950px;
+}
+
+/* 2. A Imagem da Logo (A Mágica Anti-Distorção) */
+.hero__logo img {
+  width: 100%;
+
+  /* CRUCIAL: É isto que impede a imagem de distorcer. 
+     O navegador calcula a altura automaticamente com base na largura. */
+  height: auto;
+
+  /* Remove um pequeno espaço "fantasma" que os navegadores deixam debaixo de imagens inline */
+  display: block;
+
+  /* Garante que a imagem se contém perfeitamente dentro do espaço sem ser cortada */
+  object-fit: contain;
+
+  /* EFEITO PREMIUM (Opcional): Como a sua logo tem fundo transparente, 
+     em vez de box-shadow, usamos drop-shadow para criar um brilho sutil 
+     que segue exatamente o contorno do grafite. 
+     *A cor rgba(250, 204, 21, 0.2) é um amarelo transparente. */
+  filter: drop-shadow(0 4px 20px rgba(250, 204, 21, 0.8));
+  margin: 4rem 0;
 }
 
 .hero__content {
   position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
   z-index: 1;
 }
 
@@ -353,6 +405,7 @@ h6 {
   letter-spacing: 0.15em;
   text-transform: uppercase;
   margin-bottom: var(--sp-lg);
+  text-shadow: 1px 1px 2px rgba(10, 10, 10, 0.99);
 }
 
 .hero__title {
@@ -368,7 +421,7 @@ h6 {
 }
 
 .hero__description {
-  max-width: 60rem;
+  max-width: 800px;
   font-size: var(--fs-base, 1.6rem);
   color: var(--clr-text-muted);
   line-height: var(--lh-regular);
@@ -583,10 +636,9 @@ h6 {
    ======================================== */
 /* 1. O Layout da Grelha (Grid) */
 .specs__grid {
-  display: grid;
-  /* Cria uma grelha responsiva automática. 
-     Os cartões terão no mínimo 180px e preencherão o espaço disponível. */
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  display: flex; /* Mudamos de grid para flex */
+  flex-wrap: wrap; /* Permite que os cards quebrem para a linha de baixo */
+  justify-content: center; /* CENTRALIZA a última linha! */
   gap: 2rem;
   margin-top: 2rem;
 }
@@ -616,6 +668,10 @@ h6 {
     border-top-color 0.3s ease,
     border-color 0.3s ease,
     box-shadow 0.3s ease;
+  /* Diz ao cartão: Pode crescer, pode encolher, o tamanho base é 180px */
+  flex: 1 1 180px;
+  /* Evita que um cartão fique gigante se ficar sozinho na última linha */
+  max-width: 250px;
 }
 
 /* Efeito Hover do Cartão de Especificação */

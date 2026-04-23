@@ -18,7 +18,7 @@ def index(request):
         "specs": specs_tecnicas,
     }
 
-    return render(request, "website/home.html", context)
+    return render(request, "website/pages/home.html", context)
 
 
 def about(request):
@@ -32,7 +32,7 @@ def about(request):
     context = {
         "subsistemas": subsistemas,
     }
-    return render(request, "website/about.html", context)
+    return render(request, "website/pages/about.html", context)
 
 
 def subsystem_detail(request, slug):
@@ -43,4 +43,4 @@ def subsystem_detail(request, slug):
     context = {
         "subsistema": subsistema,
     }
-    return render(request, "website/subsystem_detail.html", context)
+    return render(request, "website/pages/subsystem_detail.html", context)

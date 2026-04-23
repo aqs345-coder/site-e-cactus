@@ -1,12 +1,16 @@
+{% load static %}
 <section class="hero">
+  <div class="hero__bg-image" style="background-image: url('{% static "website/img/equipe/5.jpeg" %}')"></div>
+  
+  <div class="hero__bg-overlay"></div>
   <div class="container hero__content">
     <p class="hero__tagline">
       Engenharia de Competição • Alta Performance • Energia Elétrica
-    </p>
-    <h1 class="hero__title">
-      VELOCIDADE<br />
-      <span class="hero__title-accent">ELETRIFICADA</span>
-    </h1>
+    </p> 
+    <div class="hero__logo">
+      <img src="{% static "website/img/grafite_logo_cortado.png" %}" alt="">
+    </div>
+
     <p class="hero__description">
       O objetivo da equipe é projetar e construir do zero um protótipo elétrico
       tipo fórmula a fim de participar da competição Fórmula SAE BRASIL,
